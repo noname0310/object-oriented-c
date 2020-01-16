@@ -16,5 +16,5 @@ typedef enum _DataType
 
 
 bool is(void* target, DataType source);
-void* tcalloc(size_t size, DataType type_mask);
+void* tcalloc(size_t size);
 void tfree(void* ptr);

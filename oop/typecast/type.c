@@ -7,7 +7,7 @@ bool is(void* target, DataType source)
   return type & source;
 }
 
-void* tcalloc(size_t size, DataType type_mask) 
+void* tcalloc(size_t size) 
 {
   char* ptr = (char*)calloc(1, TYPE_MASK_SIZE + size);
   

@@ -25,7 +25,7 @@ Animal* new_Animal(char* name)
     .override_Clone = Animal_Override_Clone
 	};
 
-	Animal* pinstance = (Animal*)tcalloc(sizeof(Animal), animal_t);
+	Animal* pinstance = (Animal*)tcalloc(sizeof(Animal));
   if (pinstance != NULL)
 		*pinstance = instance;
 
@@ -95,7 +95,7 @@ Dog* new_Dog(char* name)
 		.delete = Dog_Delete
 	};
 
-	Dog* pinstance = (Dog*)tcalloc(sizeof(Animal), dog_t);
+	Dog* pinstance = (Dog*)tcalloc(sizeof(Dog));
 	if (pinstance != NULL)
 		*pinstance = instance;
 
