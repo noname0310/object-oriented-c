@@ -17,7 +17,6 @@ Animal* new_Animal(char* name)
 
 	Animal instance =
 	{
-		.type = animal_t,
 		.name = Name,
 		.delete = Animal_Delete,
 		.override_print = Animal_Override_Print,
@@ -25,7 +24,7 @@ Animal* new_Animal(char* name)
     .override_Clone = Animal_Override_Clone
 	};
 
-	Animal* pinstance = (Animal*)tcalloc(sizeof(Animal));
+	Animal* pinstance = (Animal*)tcalloc(sizeof(Animal), animal_t);
   if (pinstance != NULL)
 		*pinstance = instance;
 
@@ -41,7 +40,6 @@ Animal _Animal(char* name)
 
 	Animal instance =
 	{
-		.type = animal_t,
 		.name = Name,
 		.delete = Animal_Delete,
 		.override_print = Animal_Override_Print,
@@ -58,7 +56,7 @@ void Animal_Delete(Animal* self)
   printf("[info] delete %s\n", self->name);
 #endif
 	free(self->name);
-	if (self->type == animal_t)
+	if (getType(self) == animal_t)
 		tfree(self);
 }
 
@@ -84,18 +82,16 @@ void* Animal_Override_Clone(void* self)
 Dog* new_Dog(char* name)
 {
 	Animal parentinstance = _Animal(name);
-	parentinstance.type = dog_t;
 	parentinstance.override_print = Dog_Override_Print;
   parentinstance.override_as_ICloneable = Dog_As_ICloneable;
   parentinstance.override_Clone = Dog_Override_Clone;
-
 	Dog instance =
 	{
 		.parent = parentinstance,
 		.delete = Dog_Delete
 	};
 
-	Dog* pinstance = (Dog*)tcalloc(sizeof(Dog));
+	Dog* pinstance = (Dog*)tcalloc(sizeof(Dog), dog_t);
 	if (pinstance != NULL)
 		*pinstance = instance;
 
@@ -105,7 +101,7 @@ Dog* new_Dog(char* name)
 void Dog_Delete(Dog* self)
 {
   printf("delete dog: %s\n", self->parent.name);
-	self->parent.delete(&self->parent);
+  self->parent.delete(&self->parent);
 	tfree(self);
 }
 
@@ -129,7 +125,7 @@ void* Dog_Override_Clone(void* self)
 //-----------------------Delete Method-----------------------//
 void animal_delete(void* obj)
 {
-	switch (((Animal*)obj)->type)
+	switch (getType(obj))
 	{
 	case animal_t:
 		((Animal*)obj)->delete(obj);

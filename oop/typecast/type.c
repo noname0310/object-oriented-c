@@ -3,20 +3,23 @@
 
 bool is(void* target, DataType source)
 {
-  DataType type = *(DataType*)target;
+  DataType type = getType(target);
   return type & source;
 }
 
-void* tcalloc(size_t size) 
+void* tcalloc(size_t size, DataType type)
 {
-  char* ptr = (char*)calloc(1, TYPE_MASK_SIZE + size);
-  
+  void* ptr = calloc(1, (TYPE_MASK_SIZE + size));
+  *(DataType*)ptr = type;
   return (void*)(ptr + TYPE_MASK_SIZE);
 }
 
 void tfree(void* ptr)
 {
-  size_t addr = (size_t)ptr;
-  addr -= TYPE_MASK_SIZE;
-  free((void*)addr);
+  free((void*)(ptr - TYPE_MASK_SIZE));
+}
+
+DataType getType(void* target)
+{
+  return *(DataType*)(target - TYPE_MASK_SIZE);
 }

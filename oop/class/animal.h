@@ -7,7 +7,6 @@
 //-----------------------Animal Struct---------------------//
 typedef struct _Animal
 {
-	DataType type;
 	char* name;
 	void (*delete)(struct _Animal*);
 	void (*override_print)(void*);
