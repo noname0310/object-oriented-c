@@ -10,8 +10,8 @@
 typedef enum _DataType
 {
 	icloneable_t = 1 << 31,
-	animal_t = (1 << 0) | icloneable_t,
-	dog_t = (1 << 1) | animal_t,
+	animal_t     = 1 << 0,
+	dog_t        = 1 << 1,
 } DataType;
 
 

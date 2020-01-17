@@ -7,6 +7,9 @@
 #include "animal.h"
 #include "../interface/cloneable.h"
 
+static DataType animal_compount_t = icloneable_t | animal_t ;
+static DataType dog_compound_t    = icloneable_t | animal_t | dog_t;
+
 //-----------------------Animal Methods-----------------------//
 Animal* new_Animal(char* name)
 {
@@ -24,7 +27,7 @@ Animal* new_Animal(char* name)
     .override_Clone = Animal_Override_Clone
 	};
 
-	Animal* pinstance = (Animal*)tcalloc(sizeof(Animal), animal_t);
+	Animal* pinstance = (Animal*)tcalloc(sizeof(Animal), animal_compount_t);
   if (pinstance != NULL)
 		*pinstance = instance;
 
@@ -91,7 +94,7 @@ Dog* new_Dog(char* name)
 		.delete = Dog_Delete
 	};
 
-	Dog* pinstance = (Dog*)tcalloc(sizeof(Dog), dog_t);
+	Dog* pinstance = (Dog*)tcalloc(sizeof(Dog), dog_compound_t);
 	if (pinstance != NULL)
 		*pinstance = instance;
 
